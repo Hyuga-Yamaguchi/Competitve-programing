@@ -3,11 +3,11 @@ from collections import Counter, deque
 import itertools
 import sys
 
-sys.setrecursionlimit(10**9)
-
 
 INF = 1 << 60
 MOD1 = 10**9 + 7
+
+sys.setrecursionlimit(10**9)
 
 
 def int_input():
@@ -83,16 +83,35 @@ def graph_input(n, m, directed=False):
     return graph
 
 
+def dfs(graph, pos, visited=None, result=None):
+    if visited is None:
+        visited = set()
+    if result is None:
+        result = []
+
+    visited.add(pos)
+    result.append(pos)
+
+    for next in graph[pos]:
+        if next not in visited:
+            dfs(graph, next, visited, result)
+
+    return result
+
+
 def string_join(sep, arr):
     return sep.join(map(str, arr))
 
 
 def main():
-    N, K = int_list()
-    P = int_list()
-    Q = int_list()
+    n, m = int_list()
+    graph = graph_input(n, m)
 
-    return "Yes" if any([True for p in P for q in Q if p + q == K]) else "No"
+    return (
+        "The graph is connected."
+        if n == len(dfs(graph, 0))
+        else "The graph is not connected."
+    )
 
 
 if __name__ == "__main__":

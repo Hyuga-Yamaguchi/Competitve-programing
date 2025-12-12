@@ -1,3 +1,15 @@
+import math
+from collections import Counter, deque
+import itertools
+import sys
+
+sys.setrecursionlimit(10**9)
+
+
+INF = 1 << 60
+MOD1 = 10**9 + 7
+
+
 def int_input():
     return int(input())
 
@@ -36,14 +48,50 @@ def str_row_list(n):
     return [str_list() for _ in range(n)]
 
 
-INF = 1 << 60
+def grid_input(h):
+    return [list(input().strip()) for _ in range(h)]
+
+
+def query_input(n, case_arg_types):
+    """
+    n: Number of queries
+    case_arg_types: Args types list for case number
+    """
+    queries = []
+    for _ in range(n):
+        parts = input().split()
+        case_num = parts[0]
+
+        arg_types = case_arg_types.get(case_num, [])
+        args = [arg_type(value) for arg_type, value in zip(arg_types, parts[1:])]
+
+        queries.append((case_num, args))
+
+    return queries
+
+
+def graph_input(n, m, directed=False):
+
+    graph = [[] for _ in range(n)]
+
+    for _ in range(m):
+        a, b = int_list()
+        graph[a - 1].append(b - 1)
+        if not directed:
+            graph[b - 1].append(a - 1)
+
+    return graph
+
+
+def string_join(sep, arr):
+    return sep.join(map(str, arr))
 
 
 def main():
-    n, x = int_list()
-    a = int_list()
+    N, X = int_list()
+    A = int_list()
 
-    return "Yes" if x in a else "No"
+    return "Yes" if X in A else "No"
 
 
 if __name__ == "__main__":
